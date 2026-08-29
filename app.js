@@ -9,7 +9,7 @@ const app = express();
 
 app.use(morgan("tiny"));
 app.use(cors());
-// app.use(express.json());
+app.use(express.json());
 
 app.use("/api/books", booksRouter);
 app.use("/api/contacts", contactsRouter);

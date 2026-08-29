@@ -9,7 +9,6 @@ const __dirname = path.dirname(__filename);
 const booksPath = path.join(__dirname, "books.json"); // абсолютный путь
 
 const getAll = async () => {
-  //   const data = await fs.readFile(`${__dirname}/books.json`, "utf-8"); // __dirname - абсолютный путь
   const data = await fs.readFile(booksPath);
   return JSON.parse(data);
 };
