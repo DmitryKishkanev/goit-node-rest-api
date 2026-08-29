@@ -1,3 +1,5 @@
-import * as booksService from "./HttpError.js";
+import { HttpError } from "./HttpError.js";
+import { ctrlWrapper } from "./ctrlWrapper.js";
+import { validateBody } from "./validateBody.js";
 
-export default booksService;
+export default { HttpError, ctrlWrapper, validateBody };
