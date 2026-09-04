@@ -1,10 +1,12 @@
 import mongoose from "mongoose";
 import app from "./app.js";
 
-const DB_HOST =
-  "mongodb+srv://Dmitry:fHSSUdFJof8LOAce@cluster0.appzis8.mongodb.net/books_reader";
+import DB_HOST from "./config.js";
 
-mongoose.set("strictQuery", true);
+// const DB_HOST =
+//   "mongodb+srv://Dmitry:fHSSUdFJof8LOAce@cluster0.appzis8.mongodb.net/books_reader";
+
+// mongoose.set("strictQuery", true);
 
 mongoose
   .connect(DB_HOST)
