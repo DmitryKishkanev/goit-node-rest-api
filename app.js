@@ -1,9 +1,12 @@
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
+import dotenv from "dotenv";
 
 import booksRouter from "./routes/books.js";
 import contactsRouter from "./routes/contactsRouter.js";
+
+dotenv.config();
 
 const app = express();
 
