@@ -3,11 +3,6 @@ import app from "./app.js";
 
 import DB_HOST from "./config.js";
 
-// const DB_HOST =
-//   "mongodb+srv://Dmitry:fHSSUdFJof8LOAce@cluster0.appzis8.mongodb.net/books_reader";
-
-// mongoose.set("strictQuery", true);
-
 mongoose
   .connect(DB_HOST)
   .then(() => {
