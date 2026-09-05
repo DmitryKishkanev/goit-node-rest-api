@@ -1,15 +1,19 @@
-import books from "../services/books/index.js";
+// import books from "../services/books/index.js";
+import bookModel from "../models/book.js";
 
 import helpers from "../helpers/index.js"; //ctrlWrapper
 
 const getAll = async (req, res) => {
-  const result = await books.getAll();
+  const result = await bookModel.Book.find();
+  // const result = await bookModel.Book.find({}, "title author");
+  // const result = await bookModel.Book.find({}, "-createdAt -updatedAt");
   res.json(result);
 };
 
 const getById = async (req, res) => {
   const { id } = req.params;
-  const result = await books.getById(id);
+  // const result = await bookModel.Book.findOne({ _id: id });
+  const result = await bookModel.Book.findById(id);
   if (!result) {
     throw helpers.HttpError(404, "Not found");
     // const error = new Error("Not found");
@@ -27,7 +31,7 @@ const add = async (req, res) => {
   //   if (error) {
   //     throw helpers.HttpError(404, error.message);
   //   }
-  const result = await books.add(req.body);
+  const result = await bookModel.Book.create(req.body);
   res.status(201).json(result);
 };
 
@@ -37,7 +41,24 @@ const updateById = async (req, res) => {
   //     throw helpers.HttpError(404, error.message);
   //   }
   const { id } = req.params;
-  const result = await books.updateById(id, req.body);
+  const result = await bookModel.Book.findByIdAndUpdate(id, req.body, {
+    new: true,
+  }); // new: true - чтобы возвращался обновлённый объект
+  if (!result) {
+    throw helpers.HttpError(404, "Not found");
+  }
+  res.json(result);
+};
+
+const updateFavorite = async (req, res) => {
+  //   const { error } = addSchema.validate(req.body);
+  //   if (error) {
+  //     throw helpers.HttpError(404, error.message);
+  //   }
+  const { id } = req.params;
+  const result = await bookModel.Book.findByIdAndUpdate(id, req.body, {
+    new: true,
+  }); // new: true - чтобы возвращался обновлённый объект
   if (!result) {
     throw helpers.HttpError(404, "Not found");
   }
@@ -46,7 +67,7 @@ const updateById = async (req, res) => {
 
 const deleteById = async (req, res) => {
   const { id } = req.params;
-  const result = await books.deleteById(id);
+  const result = await bookModel.Book.findByIdAndDelete(id);
   if (!result) {
     throw helpers.HttpError(404, "Not found");
   }
@@ -61,5 +82,6 @@ export default {
   getById: helpers.ctrlWrapper(getById),
   add: helpers.ctrlWrapper(add),
   updateById: helpers.ctrlWrapper(updateById),
+  updateFavorite: helpers.ctrlWrapper(updateFavorite),
   deleteById: helpers.ctrlWrapper(deleteById),
 };
