@@ -1,22 +1,32 @@
 import express from "express";
+
+import ctrl from "../controllers/contactsControllers.js";
+
+import helpers from "../helpers/index.js";
+
 import {
-  getAllContacts,
-  getOneContact,
-  deleteContact,
-  createContact,
-  updateContact,
-} from "../controllers/contactsControllers.js";
+  createContactSchema,
+  updateContactSchema,
+} from "../schemas/contactsSchemas.js";
 
 const contactsRouter = express.Router();
 
-contactsRouter.get("/", getAllContacts);
+contactsRouter.get("/", ctrl.getAllContacts);
 
-contactsRouter.get("/:id", getOneContact);
+contactsRouter.get("/:id", ctrl.getOneContact);
 
-contactsRouter.delete("/:id", deleteContact);
+contactsRouter.post(
+  "/",
+  helpers.validateBody(createContactSchema),
+  ctrl.createContact,
+);
 
-contactsRouter.post("/", createContact);
+contactsRouter.put(
+  "/:id",
+  helpers.validateBody(updateContactSchema),
+  ctrl.updateContact,
+);
 
-contactsRouter.put("/:id", updateContact);
+contactsRouter.delete("/:id", ctrl.deleteContact);
 
 export default contactsRouter;
