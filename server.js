@@ -1,8 +1,7 @@
 import mongoose from "mongoose";
 import app from "./app.js";
 
-const DB_HOST =
-  "mongodb+srv://Dmitry:lfQPeaHge6QoIobL@cluster0.xqzdqum.mongodb.net/contacts_reader";
+const { DB_HOST } = process.env;
 
 mongoose
   .connect(DB_HOST)
