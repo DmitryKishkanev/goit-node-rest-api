@@ -13,20 +13,20 @@ const contactsRouter = express.Router();
 
 contactsRouter.get("/", ctrl.getAllContacts);
 
-contactsRouter.get("/:id", ctrl.getOneContact);
+// contactsRouter.get("/:id", ctrl.getOneContact);
 
-contactsRouter.post(
-  "/",
-  helpers.validateBody(createContactSchema),
-  ctrl.createContact,
-);
+// contactsRouter.post(
+//   "/",
+//   helpers.validateBody(createContactSchema),
+//   ctrl.createContact,
+// );
 
-contactsRouter.put(
-  "/:id",
-  helpers.validateBody(updateContactSchema),
-  ctrl.updateContact,
-);
+// contactsRouter.put(
+//   "/:id",
+//   helpers.validateBody(updateContactSchema),
+//   ctrl.updateContact,
+// );
 
-contactsRouter.delete("/:id", ctrl.deleteContact);
+// contactsRouter.delete("/:id", ctrl.deleteContact);
 
 export default contactsRouter;
