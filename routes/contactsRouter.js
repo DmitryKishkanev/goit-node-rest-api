@@ -4,10 +4,7 @@ import ctrl from "../controllers/contactsControllers.js";
 
 import helpers from "../helpers/index.js";
 
-import {
-  createContactSchema,
-  updateContactSchema,
-} from "../schemas/contactsSchemas.js";
+import booksSchemas from "../services/contact.js";
 
 const contactsRouter = express.Router();
 
@@ -15,15 +12,15 @@ contactsRouter.get("/", ctrl.getAllContacts);
 
 // contactsRouter.get("/:id", ctrl.getOneContact);
 
-// contactsRouter.post(
-//   "/",
-//   helpers.validateBody(createContactSchema),
-//   ctrl.createContact,
-// );
+contactsRouter.post(
+  "/",
+  helpers.validateBody(booksSchemas.schemas.createContactSchema),
+  ctrl.createContact,
+);
 
 // contactsRouter.put(
 //   "/:id",
-//   helpers.validateBody(updateContactSchema),
+//   helpers.validateBody(booksSchemas.schemas.updateContactSchema),
 //   ctrl.updateContact,
 // );
 

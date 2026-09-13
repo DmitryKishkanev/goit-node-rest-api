@@ -1,10 +1,10 @@
 // import contactsService from "../services/contactsServices.js";
-import Contact from "../services/contact.js";
+import contactModel from "../services/contact.js";
 
 import helpers from "../helpers/index.js";
 
 const getAllContacts = async (req, res) => {
-  const result = await Contact.find();
+  const result = await contactModel.Contact.find();
   res.json(result);
 };
 
@@ -18,10 +18,10 @@ const getAllContacts = async (req, res) => {
 //   res.json(result);
 // };
 
-// const createContact = async (req, res) => {
-//   const result = await contactsService.addContact(req.body);
-//   res.status(201).json(result);
-// };
+const createContact = async (req, res) => {
+  const result = await contactModel.Contact.create(req.body);
+  res.status(201).json(result);
+};
 
 // const updateContact = async (req, res) => {
 //   const { id } = req.params;
@@ -45,7 +45,7 @@ const getAllContacts = async (req, res) => {
 export default {
   getAllContacts: helpers.ctrlWrapper(getAllContacts),
   // getOneContact: helpers.ctrlWrapper(getOneContact),
-  // createContact: helpers.ctrlWrapper(createContact),
+  createContact: helpers.ctrlWrapper(createContact),
   // updateContact: helpers.ctrlWrapper(updateContact),
   // deleteContact: helpers.ctrlWrapper(deleteContact),
 };
