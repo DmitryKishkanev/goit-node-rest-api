@@ -4,8 +4,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./server.js",
-    "dev": "nodemon ./server.js"
+    "start:books": "dotenv -e .env.books -- node ./server.js",
+    "dev:books": "dotenv -e .env.books -- nodemon ./server.js"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +23,7 @@
     "yargs": "^18.1.0"
   },
   "devDependencies": {
+    "dotenv-cli": "^11.0.0",
     "nodemon": "^3.1.14"
   }
 }
