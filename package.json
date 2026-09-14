@@ -4,8 +4,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start:books": "dotenv -e .env.books -- node ./server.js",
-    "dev:books": "dotenv -e .env.books -- nodemon ./server.js"
+    "start": "dotenv -e .env.books -- node ./server.js",
+    "dev": "dotenv -e .env.books -- nodemon ./server.js"
   },
   "keywords": [],
   "author": "",
