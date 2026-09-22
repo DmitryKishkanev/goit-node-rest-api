@@ -12,8 +12,6 @@ router.get("/", ctrl.getAll);
 
 router.get("/:id", helpers.isValidId, ctrl.getById);
 
-// router.post("/", ctrl.add);
-
 router.post(
   "/",
   helpers.validateBody(booksSchemas.schemas.addSchema),
