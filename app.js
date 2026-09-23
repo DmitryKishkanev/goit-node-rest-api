@@ -3,8 +3,8 @@ import morgan from "morgan";
 import cors from "cors";
 import dotenv from "dotenv";
 
+import authRouter from "./routes/auth.js";
 import booksRouter from "./routes/books.js";
-// import contactsRouter from "./routes/contactsRouter.js";
 
 dotenv.config();
 
@@ -14,8 +14,8 @@ app.use(morgan("tiny"));
 app.use(cors());
 app.use(express.json());
 
+app.use("/api/auth", authRouter);
 app.use("/api/books", booksRouter);
-// app.use("/api/contacts", contactsRouter);
 
 app.use((_, res) => {
   res.status(404).json({ message: "Route not found" });
