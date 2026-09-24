@@ -1,7 +1,9 @@
-export const handleMongooseError = (error, data, next) => {
+const handleMongooseError = (error, data, next) => {
   error.status = 400;
   next();
 };
+
+export default handleMongooseError;
 
 // export const handleMongooseError = (error, data, next) => {
 //   const { name, code } = error;
