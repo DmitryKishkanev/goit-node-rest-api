@@ -4,20 +4,14 @@ import authCtrl from "../controllers/authControllers.js";
 
 import helpers from "../helpers/index.js";
 
-import userSchemas from "../models/user.js";
+import usersSchemas from "../models/user.js";
 
 const router = express.Router();
 
 // signup
-// router.post(
-//   "/register",
-//   helpers.validateBody(userSchemas.schemas.registerSchema),
-//   authCtrl.register,
-// );
-
 router.post(
   "/register",
-  helpers.validateBody(userSchemas.schemas.registerSchema),
+  helpers.validateBody(usersSchemas.schemas.registerSchema),
   authCtrl.register,
 );
 
