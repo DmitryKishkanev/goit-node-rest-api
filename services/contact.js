@@ -37,7 +37,11 @@ const updateContactSchema = Joi.object({
   email: Joi.string(),
   phone: Joi.string(),
   favorite: Joi.boolean(),
-}).min(1); // требуем хотя бы одно поле
+})
+  .min(1)
+  .messages({
+    "object.min": "Body must have at least one field",
+  }); // требуем хотя бы одно поле
 
 const updateFavoriteSchema = Joi.object({
   favorite: Joi.boolean().required(),
