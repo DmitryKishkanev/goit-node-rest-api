@@ -15,4 +15,11 @@ router.post(
   authCtrl.register,
 );
 
+//signin
+router.post(
+  "/login",
+  helpers.validateBody(usersSchemas.schemas.loginSchema),
+  authCtrl.login,
+);
+
 export default router;
