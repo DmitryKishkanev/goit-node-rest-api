@@ -29,6 +29,12 @@ const bookSchema = new Schema(
       match: dateRegexp,
       required: true,
     },
+    // кто делает запрос
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: "user",
+      required: true,
+    },
   },
   { versionKey: false, timestamps: true },
 );

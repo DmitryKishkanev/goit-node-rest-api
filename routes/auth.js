@@ -22,4 +22,10 @@ router.post(
   authCtrl.login,
 );
 
+// current
+router.get("/current", helpers.authenticate, authCtrl.getCurrent);
+
+//logout
+router.post("/logout", helpers.authenticate, authCtrl.logout);
+
 export default router;

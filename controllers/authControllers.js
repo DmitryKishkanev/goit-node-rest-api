@@ -42,17 +42,35 @@ const login = async (req, res) => {
     id: user._id,
   };
 
-  console.log(process.env.SECRET_KEY);
-  console.log(SECRET_KEY);
-
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "23h" });
+  await userModel.User.findByIdAndUpdate(user._id, { token });
 
   res.json({
     token,
   });
 };
 
+const getCurrent = async (req, res) => {
+  const { email, name } = req.user;
+
+  res.json({
+    email,
+    name,
+  });
+};
+
+const logout = async (req, res) => {
+  const { _id } = req.user;
+  await userModel.User.findByIdAndUpdate(_id, { token: "" });
+
+  res.json({
+    message: "Logout success",
+  });
+};
+
 export default {
   register: helpers.ctrlWrapper(register),
   login: helpers.ctrlWrapper(login),
+  getCurrent: helpers.ctrlWrapper(getCurrent),
+  logout: helpers.ctrlWrapper(logout),
 };

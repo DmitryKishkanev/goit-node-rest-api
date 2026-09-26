@@ -3,6 +3,7 @@ import ctrlWrapper from "./ctrlWrapper.js";
 import validateBody from "./validateBody.js";
 import handleMongooseError from "./handleMongooseError.js";
 import isValidId from "./isValidId.js";
+import authenticate from "./authenticate.js";
 
 export default {
   HttpError,
@@ -10,4 +11,5 @@ export default {
   validateBody,
   handleMongooseError,
   isValidId,
+  authenticate,
 };

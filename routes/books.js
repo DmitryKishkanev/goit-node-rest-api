@@ -8,18 +8,20 @@ import booksSchemas from "../models/book.js";
 
 const router = express.Router();
 
-router.get("/", ctrl.getAll);
+router.get("/", helpers.authenticate, ctrl.getAll);
 
-router.get("/:id", helpers.isValidId, ctrl.getById);
+router.get("/:id", helpers.authenticate, helpers.isValidId, ctrl.getById);
 
 router.post(
   "/",
+  helpers.authenticate,
   helpers.validateBody(booksSchemas.schemas.addSchema),
   ctrl.add,
 );
 
 router.put(
   "/:id",
+  helpers.authenticate,
   helpers.isValidId,
   helpers.validateBody(booksSchemas.schemas.addSchema),
   ctrl.updateById,
@@ -27,6 +29,7 @@ router.put(
 
 router.patch(
   "/:id/favorite",
+  helpers.authenticate,
   helpers.isValidId,
   helpers.validateBody(booksSchemas.schemas.updateFavoriteSchema),
   ctrl.updateFavorite,

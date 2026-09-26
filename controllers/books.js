@@ -4,9 +4,19 @@ import bookModel from "../models/book.js";
 import helpers from "../helpers/index.js"; //ctrlWrapper
 
 const getAll = async (req, res) => {
-  const result = await bookModel.Book.find();
-  // const result = await bookModel.Book.find({}, "title author");
-  // const result = await bookModel.Book.find({}, "-createdAt -updatedAt");
+  // выполняем запрос за книгами с id человека, который делаетт запрос
+  const { _id: owner } = req.user; // переименовуем id в owner
+
+  //ПАГИНАЦИЯ
+  // берём нужные параметры поиска
+  const { page = 1, limit = 10 } = req.query;
+  const skip = (page - 1) * limit;
+  const result = await bookModel.Book.find({ owner }, "-createdAt -updatedAt", {
+    skip,
+    limit,
+  }).populate("owner", "name email");
+  // const result = await bookModel.Book.find({}, "title author"); // вернуть только "title author"
+  // const result = await bookModel.Book.find({}, "-createdAt -updatedAt"); //вернуть всё кроме "-createdAt -updatedAt"
   res.json(result);
 };
 
@@ -31,7 +41,9 @@ const add = async (req, res) => {
   //   if (error) {
   //     throw helpers.HttpError(404, error.message);
   //   }
-  const result = await bookModel.Book.create(req.body);
+  // выполняем добавление книги с id человека, который делаетт запрос
+  const { _id: owner } = req.user; // переименовуем id в owner
+  const result = await bookModel.Book.create({ ...req.body, owner });
   res.status(201).json(result);
 };
 
