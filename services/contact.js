@@ -50,7 +50,6 @@ const updateFavoriteSchema = Joi.object({
 const schemas = {
   createContactSchema,
   updateContactSchema,
-  updateFavoriteSchema,
 };
 
 const Contact = model("contact", contactSchema);
