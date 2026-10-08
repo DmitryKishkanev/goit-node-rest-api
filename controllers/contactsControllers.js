@@ -3,7 +3,8 @@ import contactModel from "../services/contact.js";
 import helpers from "../helpers/index.js";
 
 const getAllContacts = async (req, res) => {
-  const result = await contactModel.Contact.find();
+  const { _id: owner } = req.user;
+  const result = await contactModel.Contact.find({ owner });
   res.json(result);
 };
 
@@ -18,7 +19,8 @@ const getOneContact = async (req, res) => {
 };
 
 const createContact = async (req, res) => {
-  const result = await contactModel.Contact.create(req.body);
+  const { _id: owner } = req.user;
+  const result = await contactModel.Contact.create({ ...req.body, owner });
   res.status(201).json(result);
 };
 
