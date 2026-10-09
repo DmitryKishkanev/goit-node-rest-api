@@ -35,6 +35,6 @@ router.patch(
   ctrl.updateFavorite,
 );
 
-router.delete("/:id", helpers.isValidId, ctrl.deleteById);
+router.delete("/:id", helpers.authenticate, helpers.isValidId, ctrl.deleteById);
 
 export default router;
