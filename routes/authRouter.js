@@ -22,4 +22,10 @@ authRouter.post(
   ctrl.login,
 );
 
+// current
+authRouter.get("/current", helpers.authenticate, ctrl.getCurrent);
+
+// logout
+authRouter.post("/logout", helpers.authenticate, ctrl.logout);
+
 export default authRouter;
