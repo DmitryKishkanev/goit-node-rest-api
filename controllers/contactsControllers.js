@@ -6,12 +6,23 @@ const getAllContacts = async (req, res) => {
   const { _id: owner } = req.user;
   const { page = 1, limit = 10 } = req.query;
   const skip = (page - 1) * limit;
+  const { favorite } = req.query;
+  const filter = { owner };
+
+  if (favorite !== undefined) {
+    filter.favorite = favorite === "true";
+  }
+
   const result = await contactModel.Contact.find(
-    { owner },
+    filter,
     "-createdAt -updatedAt",
     { skip, limit },
   ).populate("owner", "name email");
+
   res.json(result);
+
+  // const result = await contactModel.Contact.find();
+  // res.json(result);
 };
 
 const getOneContact = async (req, res) => {

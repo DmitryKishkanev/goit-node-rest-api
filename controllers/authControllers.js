@@ -21,9 +21,17 @@ const register = async (req, res) => {
     password: hashPassword,
   });
 
+  // res.status(201).json({
+  //   email: newUser.email,
+  //   subscription: newUser.subscription,
+  //   // name: newUser.name,
+  // });
+
   res.status(201).json({
-    email: newUser.email,
-    name: newUser.name,
+    newUser: {
+      email: newUser.email,
+      subscription: newUser.subscription,
+    },
   });
 };
 
@@ -50,15 +58,19 @@ const login = async (req, res) => {
 
   res.json({
     token,
+    user: {
+      email: user.email,
+      subscription: user.subscription,
+    },
   });
 };
 
 const getCurrent = async (req, res) => {
-  const { email, name } = req.user;
+  const { email, subscription } = req.user;
 
   res.json({
     email,
-    name,
+    subscription,
   });
 };
 
@@ -66,9 +78,7 @@ const logout = async (req, res) => {
   const { _id } = req.user;
   await usertModel.User.findByIdAndUpdate(_id, { token: "" });
 
-  res.json({
-    message: "Logout success",
-  });
+  res.status(204).send();
 };
 
 export default {
