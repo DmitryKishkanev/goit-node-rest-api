@@ -18,6 +18,7 @@
     "dotenv": "^17.4.2",
     "dotenv-cli": "^11.0.0",
     "express": "^5.2.1",
+    "gravatar": "^1.8.2",
     "joi": "^18.2.5",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.9.4",

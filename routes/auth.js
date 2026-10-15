@@ -28,4 +28,12 @@ router.get("/current", helpers.authenticate, authCtrl.getCurrent);
 //logout
 router.post("/logout", helpers.authenticate, authCtrl.logout);
 
+// update avatar
+router.patch(
+  "/avatars",
+  helpers.authenticate,
+  helpers.upload.single("avatar"),
+  authCtrl.updateAvatar,
+);
+
 export default router;

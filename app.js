@@ -13,6 +13,8 @@ const app = express();
 app.use(morgan("tiny"));
 app.use(cors());
 app.use(express.json());
+// Middleware нужна - чтобы фронту одавать файлы. Означает, что если придёт запрос за статичным файлом - искать его в папке "public" (что бы отобразить сохранённый файл на фронте)
+app.use(express.static("public"));
 
 app.use("/api/auth", authRouter);
 app.use("/api/books", booksRouter);
