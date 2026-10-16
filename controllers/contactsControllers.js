@@ -1,11 +1,84 @@
-import contactsService from "../services/contactsServices.js";
+import contactModel from "../services/contact.js";
 
-export const getAllContacts = (req, res) => {};
+import helpers from "../helpers/index.js";
 
-export const getOneContact = (req, res) => {};
+const getAllContacts = async (req, res) => {
+  const { _id: owner } = req.user;
+  const { page = 1, limit = 10 } = req.query;
+  const skip = (page - 1) * limit;
+  const { favorite } = req.query;
+  const filter = { owner };
 
-export const deleteContact = (req, res) => {};
+  if (favorite !== undefined) {
+    filter.favorite = favorite === "true";
+  }
 
-export const createContact = (req, res) => {};
+  const result = await contactModel.Contact.find(
+    filter,
+    "-createdAt -updatedAt",
+    { skip, limit },
+  ).populate("owner", "name email");
 
-export const updateContact = (req, res) => {};
+  res.json(result);
+
+  // const result = await contactModel.Contact.find();
+  // res.json(result);
+};
+
+const getOneContact = async (req, res) => {
+  const { id } = req.params;
+  const result = await contactModel.Contact.findById(id);
+
+  if (!result) {
+    throw helpers.HttpError(404, "Not found");
+  }
+  res.json(result);
+};
+
+const createContact = async (req, res) => {
+  const { _id: owner } = req.user;
+  const result = await contactModel.Contact.create({ ...req.body, owner });
+  res.status(201).json(result);
+};
+
+const updateContact = async (req, res) => {
+  const { id } = req.params;
+  const result = await contactModel.Contact.findByIdAndUpdate(id, req.body, {
+    new: true,
+  });
+
+  if (!result) {
+    throw helpers.HttpError(404, "Not found");
+  }
+  res.json(result);
+};
+
+const updateStatusContact = async (req, res) => {
+  const { id } = req.params;
+  const result = await contactModel.Contact.findByIdAndUpdate(id, req.body, {
+    new: true,
+  });
+
+  if (!result) {
+    throw helpers.HttpError(404, "Not found");
+  }
+  res.json(result);
+};
+
+const deleteContact = async (req, res) => {
+  const { id } = req.params;
+  const result = await contactModel.Contact.findByIdAndDelete(id);
+  if (!result) {
+    throw helpers.HttpError(404, "Not found");
+  }
+  res.status(200).json(result);
+};
+
+export default {
+  getAllContacts: helpers.ctrlWrapper(getAllContacts),
+  getOneContact: helpers.ctrlWrapper(getOneContact),
+  createContact: helpers.ctrlWrapper(createContact),
+  updateContact: helpers.ctrlWrapper(updateContact),
+  updateStatusContact: helpers.ctrlWrapper(updateStatusContact),
+  deleteContact: helpers.ctrlWrapper(deleteContact),
+};
