@@ -15,6 +15,16 @@ router.post(
   authCtrl.register,
 );
 
+//verify
+router.get("/verify/:verificationCode", authCtrl.verifyEmail);
+
+//re_verify
+router.post(
+  "/verify",
+  helpers.validateBody(usersSchemas.schemas.emailSchema),
+  authCtrl.resendVerifyEmail,
+);
+
 //signin
 router.post(
   "/login",
