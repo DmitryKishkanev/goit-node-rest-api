@@ -1,26 +1,30 @@
-import express from "express";
-import morgan from "morgan";
-import cors from "cors";
+import nodemailer from "nodemailer";
+import dotenv from "dotenv";
 
-import contactsRouter from "./routes/contactsRouter.js";
+dotenv.config();
 
-const app = express();
+const { META_PASSWORD } = process.env;
 
-app.use(morgan("tiny"));
-app.use(cors());
-app.use(express.json());
+const nodemailerConfig = {
+  host: "smtp.meta.ua",
+  port: 465, // ещё бывают 25, 465, 2525
+  secure: true,
+  auth: {
+    user: "vasyakurolesov_go@meta.ua",
+    pass: META_PASSWORD,
+  },
+};
 
-app.use("/api/contacts", contactsRouter);
+const transport = nodemailer.createTransport(nodemailerConfig);
 
-app.use((_, res) => {
-  res.status(404).json({ message: "Route not found" });
-});
+const email = {
+  to: "yaraj85204@hiringview.com",
+  from: "vasyakurolesov_go@meta.ua",
+  subject: "Test email",
+  html: "<p><strong>Test email</strong> from localhost:3000</p>",
+};
 
-app.use((err, req, res, next) => {
-  const { status = 500, message = "Server error" } = err;
-  res.status(status).json({ message });
-});
-
-app.listen(3000, () => {
-  console.log("Server is running. Use our API on port: 3000");
-});
+transport
+  .sendMail(email)
+  .then(() => console.log("Email send success"))
+  .catch((error) => console.log(error.message));
