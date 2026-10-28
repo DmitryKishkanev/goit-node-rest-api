@@ -8,7 +8,7 @@ const { SENDGRID_API_KEY } = process.env;
 sgMail.setApiKey(SENDGRID_API_KEY);
 
 const email = {
-  to: "gejeh45579@hiringview.com",
+  to: "yaraj85204@hiringview.com",
   from: "kiskanevd@gmail.com",
   subject: "Test email",
   html: "<p><strong>Test email</strong> from localhost:3000</p>",
