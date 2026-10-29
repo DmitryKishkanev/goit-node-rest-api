@@ -8,7 +8,6 @@ import fs from "fs/promises";
 import { nanoid } from "nanoid";
 import userModel from "../models/user.js";
 import helpers from "../helpers/index.js";
-import sendEmail from "../helpers/sendEmail.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -47,7 +46,7 @@ const register = async (req, res) => {
     html: `<a target="_blank" href="${BASE_URL}/api/auth/verify/${verificationCode}">Click verify email</a>`,
   };
 
-  await sendEmail(verifyEmail);
+  await helpers.sendEmail(verifyEmail);
 
   res.status(201).json({
     email: newUser.email,
