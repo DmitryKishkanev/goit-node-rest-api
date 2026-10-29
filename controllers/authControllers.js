@@ -5,6 +5,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import fs from "fs/promises";
 import { Jimp } from "jimp";
+import { nanoid } from "nanoid";
 import usertModel from "../services/user.js";
 
 import helpers from "../helpers/index.js";
@@ -14,7 +15,7 @@ const __dirname = path.dirname(__filename);
 
 const avatarsDir = path.join(__dirname, "../", "public", "avatars");
 
-const { SECRET_KEY } = process.env;
+const { SECRET_KEY, BASE_URL } = process.env;
 
 const register = async (req, res) => {
   const { email, password } = req.body;
@@ -26,12 +27,20 @@ const register = async (req, res) => {
 
   const hashPassword = await bcrypt.hash(password, 10);
   const avatarURL = gravatar.url(email);
+  const verificationToken = nanoid();
 
   const newUser = await usertModel.User.create({
     ...req.body,
     password: hashPassword,
     avatarURL,
+    verificationToken,
   });
+
+  const verifyEmail = {
+    to: email,
+    subject: "Verify email",
+    html: `<a target="_blank" href=${BASE_URL}/api/auth/verify/${verificationToken}">Click verify email</a>`,
+  };
 
   res.status(201).json({
     newUser: {

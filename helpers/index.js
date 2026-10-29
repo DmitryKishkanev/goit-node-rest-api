@@ -5,6 +5,7 @@ import handleMongooseError from "./handleMongooseError.js";
 import isValidId from "./isValidId.js";
 import authenticate from "./authenticate.js";
 import upload from "./upload.js";
+import sendEmail from "./sendEmail.js";
 
 export default {
   HttpError,
@@ -14,4 +15,5 @@ export default {
   isValidId,
   authenticate,
   upload,
+  sendEmail,
 };
