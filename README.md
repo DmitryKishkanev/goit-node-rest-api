@@ -1,12 +1,13 @@
 Contacts REST API
-Features:
+REST API for contacts management built with Node.js, Express and MongoDB.
 
-JWT Authentication,
-Email Verification,
-Avatar Upload,
-Contacts CRUD,
-MongoDB Atlas,
-Render Deployment,
-Unit Tests (Jest),
-Live Demo: https://hw06-email-8hsi.onrender.com
-
+Features
+JWT Authentication
+Email Verification
+Avatar Upload
+Contacts CRUD
+MongoDB Atlas
+Render Deployment
+Unit Tests (Jest)
+Live Demo
+https://hw06-email-8hsi.onrender.com
