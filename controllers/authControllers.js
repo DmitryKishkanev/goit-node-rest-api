@@ -39,7 +39,7 @@ const register = async (req, res) => {
   const verifyEmail = {
     to: email,
     subject: "Verify email",
-    html: `<a target="_blank" href=${BASE_URL}/api/auth/verify/${verificationToken}">Click verify email</a>`,
+    html: `<a target="_blank" href="${BASE_URL}/api/auth/verify/${verificationToken}">Click verify email</a>`,
   };
 
   await helpers.sendEmail(verifyEmail);
@@ -67,6 +67,30 @@ const verifyEmail = async (req, res) => {
 
   res.json({
     message: "Verification successful",
+  });
+};
+
+const resendVerifyEmail = async (req, res) => {
+  const { email } = req.body;
+  const user = await usertModel.User.findOne({ email });
+  if (!user) {
+    throw helpers.HttpError(404, "Email not found");
+  }
+
+  if (user.verify) {
+    throw helpers.HttpError(400, "Verification has already been passed");
+  }
+
+  const verifyEmail = {
+    to: email,
+    subject: "Verify email",
+    html: `<a target="_blank" href="${BASE_URL}/api/auth/verify/${user.verificationToken}">Click verify email</a>`,
+  };
+
+  await helpers.sendEmail(verifyEmail);
+
+  res.json({
+    message: "Verify email send success",
   });
 };
 
@@ -159,10 +183,11 @@ const updateAvatar = async (req, res) => {
 
 export default {
   register: helpers.ctrlWrapper(register),
+  verifyEmail: helpers.ctrlWrapper(verifyEmail),
+  resendVerifyEmail: helpers.ctrlWrapper(resendVerifyEmail),
   login: helpers.ctrlWrapper(login),
   updateStatusUser: helpers.ctrlWrapper(updateStatusUser),
   getCurrent: helpers.ctrlWrapper(getCurrent),
   logout: helpers.ctrlWrapper(logout),
   updateAvatar: helpers.ctrlWrapper(updateAvatar),
-  verifyEmail: helpers.ctrlWrapper(verifyEmail),
 };

@@ -16,14 +16,14 @@ authRouter.post(
 );
 
 //verify
-router.get("/verify/:verificationToken", ctrl.verifyEmail);
+authRouter.get("/verify/:verificationToken", ctrl.verifyEmail);
 
-//re_verify
-// router.post(
-//   "/verify",
-//   helpers.validateBody(usersSchemas.schemas.emailSchema),
-//   authCtrl.resendVerifyEmail,
-// );
+//re_verify;
+authRouter.post(
+  "/verify",
+  helpers.validateBody(usersSchemas.schemas.emailSchema),
+  ctrl.resendVerifyEmail,
+);
 
 //signin
 authRouter.post(
