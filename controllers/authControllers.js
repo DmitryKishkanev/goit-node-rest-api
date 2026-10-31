@@ -42,11 +42,31 @@ const register = async (req, res) => {
     html: `<a target="_blank" href=${BASE_URL}/api/auth/verify/${verificationToken}">Click verify email</a>`,
   };
 
+  await helpers.sendEmail(verifyEmail);
+
   res.status(201).json({
     newUser: {
       email: newUser.email,
       subscription: newUser.subscription,
     },
+  });
+};
+
+const verifyEmail = async (req, res) => {
+  const { verificationToken } = req.params;
+  const user = await usertModel.User.findOne({ verificationToken });
+
+  if (!user) {
+    throw helpers.HttpError(404, "User not found");
+  }
+
+  await usertModel.User.findByIdAndUpdate(user._id, {
+    verify: true,
+    verificationToken: "",
+  });
+
+  res.json({
+    message: "Verification successful",
   });
 };
 
@@ -56,6 +76,10 @@ const login = async (req, res) => {
 
   if (!user) {
     throw helpers.HttpError(401, "Email or password invalid");
+  }
+
+  if (!user.verify) {
+    throw helpers.HttpError(404, "Email not verified");
   }
 
   const passwordCompare = await bcrypt.compare(password, user.password);
@@ -140,4 +164,5 @@ export default {
   getCurrent: helpers.ctrlWrapper(getCurrent),
   logout: helpers.ctrlWrapper(logout),
   updateAvatar: helpers.ctrlWrapper(updateAvatar),
+  verifyEmail: helpers.ctrlWrapper(verifyEmail),
 };
