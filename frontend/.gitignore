@@ -1,8 +1,5 @@
 # Env vars
 .env
-.env.books
-.env.contacts
-
 
 # Logs
 logs

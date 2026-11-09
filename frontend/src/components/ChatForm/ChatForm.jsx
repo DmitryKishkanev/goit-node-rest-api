@@ -1,39 +1,40 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-import styles from "./chat-form.module.css";
+import styles from './chat-form.module.css';
 
 const ChatForm = ({ onSubmit }) => {
   const [state, setState] = useState({
-    message: "",
+    message: '',
   });
 
   const handleChange = ({ target }) => {
     const { name, value } = target;
-    setState((prevState) => ({
+    setState(prevState => ({
       ...prevState,
       [name]: value,
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
     onSubmit({ ...state });
     setState({
-      message: "",
+      message: '',
     });
   };
 
   const { message } = state;
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className={styles.chatForm} onSubmit={handleSubmit}>
       <input
+        className={styles.field}
         value={message}
         name="message"
         onChange={handleChange}
         placeholder="Введите ваше сообщение"
       />
-      <button>Отправить</button>
+      <button className={styles.chatFormBtn}>Отправить</button>
     </form>
   );
 };

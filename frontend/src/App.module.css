@@ -1,0 +1,12 @@
+body {
+  font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+}
+
+.app {
+  display: flex;
+  gap: 30px;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+}

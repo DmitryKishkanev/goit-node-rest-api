@@ -15,6 +15,12 @@ const io = new Server(httpServer, {
 io.on("connection", (socket) => {
   // При новом подключении с фронта выводим в консоль сообщение
   console.log("New frontend connect");
+
+  // Принимаем message с типом 'chat-message' на бэкенде
+  socket.on("chat-message", (message) => {
+    // Отправляет сообщение всем кроме себя
+    socket.broadcast.emit("chat-message", message);
+  });
 });
 
 // Изапускаем httpServer

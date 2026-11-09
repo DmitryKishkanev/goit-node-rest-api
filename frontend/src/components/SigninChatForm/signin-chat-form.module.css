@@ -1,0 +1,25 @@
+.chatForm {
+  display: flex;
+  gap: 20px;
+  padding: 15px;
+  align-items: center;
+}
+
+.field {
+  width: 320px;
+  padding: 4px;
+  border-radius: 4px;
+
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 1.19;
+  letter-spacing: 0.03em;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.chatFormBtn {
+  width: 164px;
+}
